@@ -6,6 +6,8 @@ from kivy.vector import Vector
 from kivy.clock import Clock
 from random import randint
 
+# TODO: finish touch input
+# TODO: package game to Android
 
 
 class PongGame(Widget):
@@ -20,7 +22,7 @@ class PongGame(Widget):
 
         # bounce off top and bottom
         if (self.ball.y < 0) or (self.ball.top > self.height):
-            self.ball.velocity *= -1
+            self.ball.velocity_y *= -1
 
         # bounce off left/right
         if (self.ball.x < 0) or (self.ball.right > self.width):
@@ -32,7 +34,6 @@ class PongBall(Widget):
     velocity_x = NumericProperty(0)
     velocity_y = NumericProperty(0)
 
-    # reference list property
     velocity = ReferenceListProperty(velocity_x, velocity_y)
 
     # move the ball one step - function will be called in equal intervals
@@ -44,6 +45,7 @@ class PongBall(Widget):
 class PongApp(App):
     def build(self):
         game = PongGame()
+        game.serve_ball() # finally moving
         Clock.schedule_interval(game.update, 1.0/60.0)
         return game
 
